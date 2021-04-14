@@ -6,6 +6,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -22,7 +25,7 @@ import fr.CARPENTIER.test.R;
 public class SettingsActivity extends AppCompatActivity implements View.OnClickListener  {
 
     String username ;
-    int numberOfQuestions ;
+    int numberOfQuestions = 0 ;
 
     String category ;
     String difficulty ;
@@ -42,11 +45,32 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         usernameInput = (EditText) findViewById(R.id.usernameInput) ;
         numberOfQuestionsInput = (EditText) findViewById(R.id.numberOfQuestionsInput) ;
 
+        numberOfQuestionsInput.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(Integer.parseInt(numberOfQuestionsInput.getText().toString()) >= 51 || Integer.parseInt(numberOfQuestionsInput.getText().toString()) == 0){
+                    Toast.makeText(SettingsActivity.this, "Choisissez un nombre entre 1 et 50", Toast.LENGTH_SHORT).show();
+                }
+                else{
+
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
 
         /* Spinner category */
         Spinner spinnerCategory = (Spinner) findViewById(R.id.categoryInput);
 
-        List<String> listCategory = Arrays.asList("Any Category", "History", "Art");
+        List<String> listCategory = Arrays.asList("Any Category", "General Knowledge", "Entertainment: Books" , "Entertainment: Film" , "Entertainment: Music" , "Entertainment: Musicals & Theatres" , "Entertainment: Television" , "Entertainment: Video Games" ,"Entertainment: Board Games" , "Science & Nature" , "Science: Computers" , "Science: Mathematics" , "Mythology" , "Sports" , "Geography" , "History" , "Politics" ,"Art" , "Celebrities" , "Animals" , "Vehicles" , "Entertainment: Comics" ,"Science: Gadgets" , "Entertainment: Japanese Anime & Manga" , "Entertainment: Cartoon & Animations");
 
 
         // Create an ArrayAdapter using the string array and a default spinner layout
@@ -93,6 +117,8 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         spinnerType.setAdapter(adapterT);
 
 
+
+
         // Action button, récupère les valeurs entrées
 
         buttonSubmit = (Button) findViewById(R.id.buttonSubmit) ;
@@ -100,20 +126,25 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
             @Override
             public void onClick(View v) {
                 username = usernameInput.getText().toString() ;
-                numberOfQuestions = Integer.valueOf(numberOfQuestionsInput.getText().toString()) ;
+                if(numberOfQuestionsInput.getText().toString().isEmpty() || Integer.parseInt(numberOfQuestionsInput.getText().toString()) >= 51){
+                    numberOfQuestions = 1 ;
+                }
+                else{
+                    numberOfQuestions = Integer.parseInt(numberOfQuestionsInput.getText().toString()) ;
+                }
                 category = spinnerCategory.getSelectedItem().toString() ;
                 difficulty = spinnerDifficulty.getSelectedItem().toString() ;
                 type = spinnerType.getSelectedItem().toString() ;
 
-                Intent intent = new Intent(getBaseContext(), SettingsUtility.class);
-                intent.putExtra("USERNAME", username);
-                intent.putExtra("NUMBER_OF_QUESTIONS", numberOfQuestions);
-                intent.putExtra("CATEGORY", category);
-                intent.putExtra("DIFFICULTY", difficulty);
-                intent.putExtra("TYPE", type);
+                SettingsUtility.setUsername(username);
+                SettingsUtility.setCategory(category);
+                SettingsUtility.setDifficulty(difficulty);
+                SettingsUtility.setNumberOfQuestions(numberOfQuestions);
+                SettingsUtility.setType(type);
 
+                Log.d("MON LOG", username);
 
-                Toast.makeText(SettingsActivity.this, "Clicked", Toast.LENGTH_SHORT).show();
+                Toast.makeText(SettingsActivity.this, "Bonjour " + SettingsUtility.getUsername() + ".", Toast.LENGTH_SHORT).show();
                 Intent intent2 = new Intent(SettingsActivity.this, MainActivity.class);
                 startActivity(intent2);
             }
