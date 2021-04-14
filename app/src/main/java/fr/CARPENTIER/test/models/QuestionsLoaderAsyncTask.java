@@ -14,7 +14,9 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 
 public class QuestionsLoaderAsyncTask extends AsyncTask<String, Void, JSONObject> {
     private final QuestionsLoaderInterface aListener;
@@ -25,7 +27,7 @@ public class QuestionsLoaderAsyncTask extends AsyncTask<String, Void, JSONObject
 
     @Override
     protected  JSONObject doInBackground(String... strings){
-        URL url =null;
+        URL url;
         HttpURLConnection urlConnection = null;
         String result = null;
         try{
@@ -35,21 +37,25 @@ public class QuestionsLoaderAsyncTask extends AsyncTask<String, Void, JSONObject
             result = readStream(in); // Read Stream
         }
         catch(MalformedURLException e){
-
+            e.printStackTrace();
+            aListener.onError(e);
         }
-        catch(IOExceptionn e){
-
+        catch(IOException e){
+            e.printStackTrace();
+            aListener.onError(e);
         }
         finally {
-
+            if(urlConnection != null)
+                urlConnection.disconnect();
         }
 
         JSONObject json = null;
         try{
-            
+            json = new JSONObject(result);
         }
         catch (JSONException e){
-
+            e.printStackTrace();
+            aListener.onError(e);
         }
 
         return json; // return the result
@@ -76,6 +82,10 @@ public class QuestionsLoaderAsyncTask extends AsyncTask<String, Void, JSONObject
     private String readStream(InputStream is) throws  IOException {
         StringBuilder sb = new StringBuilder();
         BufferedReader r = new BufferedReader(new InputStreamReader(is), 1000);
-
+        for (String line = r.readLine(); line != null; line = r.readLine()){
+            sb.append(line);
+        }
+        is.close();
+        return sb.toString();
     }
 }
