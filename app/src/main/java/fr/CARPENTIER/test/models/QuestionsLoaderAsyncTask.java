@@ -35,22 +35,17 @@ public class QuestionsLoaderAsyncTask extends AsyncTask<String, Void, JSONObject
             urlConnection = (HttpURLConnection) url.openConnection(); // Open
             InputStream in = new BufferedInputStream(urlConnection.getInputStream()); // Stream
             result = readStream(in); // Read Stream
-        }
-        catch(MalformedURLException e){
+        } catch(IOException e){
             e.printStackTrace();
             aListener.onError(e);
-        }
-        catch(IOException e){
-            e.printStackTrace();
-            aListener.onError(e);
-        }
-        finally {
+        } finally {
             if(urlConnection != null)
                 urlConnection.disconnect();
         }
 
         JSONObject json = null;
         try{
+            assert result != null;
             json = new JSONObject(result);
         }
         catch (JSONException e){
