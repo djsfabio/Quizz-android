@@ -22,18 +22,18 @@ import java.util.List;
 
 import fr.CARPENTIER.test.R;
 
-public class SettingsActivity extends AppCompatActivity implements View.OnClickListener  {
+public class SettingsActivity extends AppCompatActivity implements View.OnClickListener {
 
-    String username ;
-    String numberOfQuestions ;
-    String category ;
-    String difficulty ;
-    String type ;
+    String username = null;
+    String numberOfQuestions = null;
+    String category = null;
+    String difficulty = null;
+    String type = null;
 
-    EditText usernameInput ;
-    EditText numberOfQuestionsInput ;
+    EditText usernameInput;
+    EditText numberOfQuestionsInput;
 
-    Button buttonSubmit ;
+    Button buttonSubmit;
 
 
     @Override
@@ -41,16 +41,15 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_settings);
 
-        usernameInput = (EditText) findViewById(R.id.usernameInput) ;
+        usernameInput = (EditText) findViewById(R.id.usernameInput);
 
 
         /* Spinner number of questions */
         Spinner spinnerNumberOfQuestions = (Spinner) findViewById(R.id.numberOfQuestionsInput);
-        List<String> listNumberOfQuestions = new ArrayList<>() ;
-        for(int i = 1 ; i <= 50 ; i++){
-            listNumberOfQuestions.add(String.valueOf(i)) ;
+        List<String> listNumberOfQuestions = new ArrayList<>();
+        for (int i = 1; i <= 50; i++) {
+            listNumberOfQuestions.add(String.valueOf(i));
         }
-
 
 
         // Create an ArrayAdapter using the string array and a default spinner layout
@@ -68,7 +67,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         /* Spinner category */
         Spinner spinnerCategory = (Spinner) findViewById(R.id.categoryInput);
 
-        List<String> listCategory = Arrays.asList("Any Category", "General Knowledge", "Entertainment: Books" , "Entertainment: Film" , "Entertainment: Music" , "Entertainment: Musicals & Theatres" , "Entertainment: Television" , "Entertainment: Video Games" ,"Entertainment: Board Games" , "Science & Nature" , "Science: Computers" , "Science: Mathematics" , "Mythology" , "Sports" , "Geography" , "History" , "Politics" ,"Art" , "Celebrities" , "Animals" , "Vehicles" , "Entertainment: Comics" ,"Science: Gadgets" , "Entertainment: Japanese Anime & Manga" , "Entertainment: Cartoon & Animations");
+        List<String> listCategory = Arrays.asList("Any Category", "General Knowledge", "Entertainment: Books", "Entertainment: Film", "Entertainment: Music", "Entertainment: Musicals & Theatres", "Entertainment: Television", "Entertainment: Video Games", "Entertainment: Board Games", "Science & Nature", "Science: Computers", "Science: Mathematics", "Mythology", "Sports", "Geography", "History", "Politics", "Art", "Celebrities", "Animals", "Vehicles", "Entertainment: Comics", "Science: Gadgets", "Entertainment: Japanese Anime & Manga", "Entertainment: Cartoon & Animations");
 
 
         // Create an ArrayAdapter using the string array and a default spinner layout
@@ -115,19 +114,17 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         spinnerType.setAdapter(adapterT);
 
 
-
-
         // Action button, récupère les valeurs entrées
 
-        buttonSubmit = (Button) findViewById(R.id.buttonSubmit) ;
+        buttonSubmit = (Button) findViewById(R.id.buttonSubmit);
         buttonSubmit.setOnClickListener((new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                username = usernameInput.getText().toString() ;
-                numberOfQuestions = spinnerNumberOfQuestions.getSelectedItem().toString() ;
-                category = spinnerCategory.getSelectedItem().toString() ;
-                difficulty = spinnerDifficulty.getSelectedItem().toString() ;
-                type = spinnerType.getSelectedItem().toString() ;
+                username = usernameInput.getText().toString();
+                numberOfQuestions = spinnerNumberOfQuestions.getSelectedItem().toString();
+                category = spinnerCategory.getSelectedItem().toString();
+                difficulty = spinnerDifficulty.getSelectedItem().toString();
+                type = spinnerType.getSelectedItem().toString();
 
                 SettingsUtility.setUsername(username);
                 SettingsUtility.setCategory(category);
@@ -144,6 +141,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         }));
 
     }
+
     @Override
     public void onClick(View v) {
 
