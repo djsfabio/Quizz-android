@@ -46,7 +46,7 @@ public class QuestionsLoaderAsyncTask extends AsyncTask<String, Void, JSONObject
 
         JSONObject json = null;
         try{
-            json = new
+            
         }
         catch (JSONException e){
 
