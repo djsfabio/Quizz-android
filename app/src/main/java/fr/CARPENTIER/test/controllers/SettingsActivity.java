@@ -25,8 +25,7 @@ import fr.CARPENTIER.test.R;
 public class SettingsActivity extends AppCompatActivity implements View.OnClickListener  {
 
     String username ;
-    int numberOfQuestions = 0 ;
-
+    String numberOfQuestions ;
     String category ;
     String difficulty ;
     String type ;
@@ -43,29 +42,28 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         setContentView(R.layout.activity_settings);
 
         usernameInput = (EditText) findViewById(R.id.usernameInput) ;
-        numberOfQuestionsInput = (EditText) findViewById(R.id.numberOfQuestionsInput) ;
 
-        numberOfQuestionsInput.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
-            }
+        /* Spinner number of questions */
+        Spinner spinnerNumberOfQuestions = (Spinner) findViewById(R.id.numberOfQuestionsInput);
+        List<String> listNumberOfQuestions = new ArrayList<>() ;
+        for(int i = 1 ; i <= 50 ; i++){
+            listNumberOfQuestions.add(String.valueOf(i)) ;
+        }
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if(Integer.parseInt(numberOfQuestionsInput.getText().toString()) >= 51 || Integer.parseInt(numberOfQuestionsInput.getText().toString()) == 0){
-                    Toast.makeText(SettingsActivity.this, "Choisissez un nombre entre 1 et 50", Toast.LENGTH_SHORT).show();
-                }
-                else{
 
-                }
-            }
 
-            @Override
-            public void afterTextChanged(Editable s) {
+        // Create an ArrayAdapter using the string array and a default spinner layout
+        ArrayAdapter<String> adapter1 = new ArrayAdapter<>(
+                this,
+                android.R.layout.simple_spinner_item,
+                listNumberOfQuestions
+        );
+        // Specify the layout to use when the list of choices appears
+        adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        // Apply the adapter to the spinner
+        spinnerNumberOfQuestions.setAdapter(adapter1);
 
-            }
-        });
 
         /* Spinner category */
         Spinner spinnerCategory = (Spinner) findViewById(R.id.categoryInput);
@@ -126,12 +124,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
             @Override
             public void onClick(View v) {
                 username = usernameInput.getText().toString() ;
-                if(numberOfQuestionsInput.getText().toString().isEmpty() || Integer.parseInt(numberOfQuestionsInput.getText().toString()) >= 51){
-                    numberOfQuestions = 1 ;
-                }
-                else{
-                    numberOfQuestions = Integer.parseInt(numberOfQuestionsInput.getText().toString()) ;
-                }
+                numberOfQuestions = spinnerNumberOfQuestions.getSelectedItem().toString() ;
                 category = spinnerCategory.getSelectedItem().toString() ;
                 difficulty = spinnerDifficulty.getSelectedItem().toString() ;
                 type = spinnerType.getSelectedItem().toString() ;

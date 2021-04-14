@@ -2,7 +2,7 @@ package fr.CARPENTIER.test.controllers;
 
 public class SettingsUtility {
     private static String aUsername = null ;
-    private static int aNumberOfQuestions = 1;
+    private static String aNumberOfQuestions;
     private static String aCategory = null ;
     private static String aDifficulty = null ;
     private static String aType = null ;
@@ -12,7 +12,7 @@ public class SettingsUtility {
         return aUsername;
     }
 
-    public static int getaNumberOfQuestions() {
+    public static String getaNumberOfQuestions() {
         return aNumberOfQuestions;
     }
 
@@ -32,7 +32,7 @@ public class SettingsUtility {
         aUsername = username;
     }
 
-    public static void setNumberOfQuestions(final int numberOfQuestions) {
+    public static void setNumberOfQuestions(final String numberOfQuestions) {
         aNumberOfQuestions = numberOfQuestions;
     }
 
