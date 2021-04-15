@@ -34,13 +34,16 @@
             android:inputType="text" />
 
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/numberOfQuestionsInput"
+        <TextView
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:hint="Number of questions (1-50)"
-            android:inputType="number" />
+            android:text="Number of questions"
+            android:textColor="@color/black"/>
+
+        <Spinner
+            android:id="@+id/numberOfQuestionsInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
 
         <TextView
             android:layout_width="300dp"
