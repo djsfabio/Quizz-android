@@ -31,7 +31,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         if (SettingsUtility.getUsername() != null) {
             TextView myTextView = (TextView) findViewById(R.id.myTextView);
-            myTextView.setText(SettingsUtility.getUsername() + "\n" + SettingsUtility.getaNumberOfQuestions() + " Question(s)\nCategory : " + SettingsUtility.getaCategory() + "\nDifficulty : " + SettingsUtility.getaDifficulty() + "\nType : " + SettingsUtility.getaType());
+            myTextView.setText(SettingsUtility.getUsername() + "\n" + SettingsUtility.getaNumberOfQuestions() + " Questions\nCategory : " + SettingsUtility.getaCategory() + "\nDifficulty : " + SettingsUtility.getaDifficulty() + "\nType : " + SettingsUtility.getaType());
         }
 
 

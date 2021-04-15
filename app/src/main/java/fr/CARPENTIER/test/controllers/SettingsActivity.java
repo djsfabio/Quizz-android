@@ -47,7 +47,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         /* Spinner number of questions */
         Spinner spinnerNumberOfQuestions = (Spinner) findViewById(R.id.numberOfQuestionsInput);
         List<String> listNumberOfQuestions = new ArrayList<>();
-        for (int i = 1; i <= 50; i++) {
+        for (int i = 10; i <= 50; i+=5) {
             listNumberOfQuestions.add(String.valueOf(i));
         }
 
