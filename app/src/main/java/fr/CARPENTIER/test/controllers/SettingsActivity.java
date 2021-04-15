@@ -16,6 +16,10 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.android.material.snackbar.Snackbar;
+
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -67,7 +71,12 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         /* Spinner category */
         Spinner spinnerCategory = (Spinner) findViewById(R.id.categoryInput);
 
-        List<String> listCategory = Arrays.asList("Any Category", "General Knowledge", "Entertainment: Books", "Entertainment: Film", "Entertainment: Music", "Entertainment: Musicals & Theatres", "Entertainment: Television", "Entertainment: Video Games", "Entertainment: Board Games", "Science & Nature", "Science: Computers", "Science: Mathematics", "Mythology", "Sports", "Geography", "History", "Politics", "Art", "Celebrities", "Animals", "Vehicles", "Entertainment: Comics", "Science: Gadgets", "Entertainment: Japanese Anime & Manga", "Entertainment: Cartoon & Animations");
+        List<String> listCategory = Arrays.asList("Any Category", "General Knowledge", "Entertainment: Books",
+                "Entertainment: Film", "Entertainment: Music", "Entertainment: Musicals & Theatres",
+                "Entertainment: Television", "Entertainment: Video Games", "Entertainment: Board Games", "Science & Nature",
+                "Science: Computers", "Science: Mathematics", "Mythology", "Sports", "Geography", "History",
+                "Politics", "Art", "Celebrities", "Animals", "Vehicles", "Entertainment: Comics",
+                "Science: Gadgets", "Entertainment: Japanese Anime & Manga", "Entertainment: Cartoon & Animations");
 
 
         // Create an ArrayAdapter using the string array and a default spinner layout
@@ -120,23 +129,122 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         buttonSubmit.setOnClickListener((new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                username = usernameInput.getText().toString();
-                numberOfQuestions = spinnerNumberOfQuestions.getSelectedItem().toString();
-                category = spinnerCategory.getSelectedItem().toString();
-                difficulty = spinnerDifficulty.getSelectedItem().toString();
-                type = spinnerType.getSelectedItem().toString();
 
-                SettingsUtility.setUsername(username);
-                SettingsUtility.setCategory(category);
-                SettingsUtility.setDifficulty(difficulty);
-                SettingsUtility.setNumberOfQuestions(numberOfQuestions);
-                SettingsUtility.setType(type);
+                if(usernameInput.getText().toString().equals("")){
+                    Snackbar.make(findViewById(R.id.settingsLayout), "Please, use a valid username", Snackbar.LENGTH_SHORT).show();
+                }
+                else{
+                    username = usernameInput.getText().toString();
+                    numberOfQuestions = spinnerNumberOfQuestions.getSelectedItem().toString();
+                    category = spinnerCategory.getSelectedItem().toString();
+                    difficulty = spinnerDifficulty.getSelectedItem().toString().toLowerCase();
+                    type = spinnerType.getSelectedItem().toString();
 
-                Log.d("MON LOG", username);
+                    if(type.equals("Multiple Choice")){
+                        type = "multiple" ;
+                    }
+                    if(type.equals("True / False")){
+                        type = "boolean" ;
+                    }
+                    if(difficulty.equals("any difficulty")){
+                        difficulty = null ;
+                    }
+                    if(type.equals("Any Type")){
+                        type = null ;
+                    }
 
-                Toast.makeText(SettingsActivity.this, "Bonjour " + SettingsUtility.getUsername() + ".", Toast.LENGTH_SHORT).show();
-                Intent intent2 = new Intent(SettingsActivity.this, MainActivity.class);
-                startActivity(intent2);
+
+
+                    switch(category){
+                        case "Any Category" :
+                            category = null ;
+                            break ;
+                        case "General Knowledge" :
+                            category = "9" ;
+                            break ;
+                        case "Entertainment: Books" :
+                            category = "10" ;
+                            break ;
+                        case "Entertainment: Film" :
+                            category = "11" ;
+                            break ;
+                        case "Entertainment: Music" :
+                            category = "12" ;
+                            break ;
+                        case "Entertainment: Musicals & Theatres" :
+                            category = "13" ;
+                            break ;
+                        case "Entertainment: Television" :
+                            category = "14" ;
+                            break ;
+                        case "Entertainment: Video Games" :
+                            category = "15" ;
+                            break ;
+                        case "Entertainment: Board Games" :
+                            category = "16" ;
+                            break ;
+                        case "Science & Nature" :
+                            category = "17" ;
+                            break ;
+                        case "Science: Computers" :
+                            category = "18" ;
+                            break ;
+                        case "Science: Mathematics" :
+                            category = "19" ;
+                            break ;
+                        case "Mythology" :
+                            category = "20" ;
+                            break ;
+                        case "Sports" :
+                            category = "21" ;
+                            break ;
+                        case "Geography" :
+                            category = "22" ;
+                            break ;
+                        case "History" :
+                            category = "23" ;
+                            break ;
+                        case "Politics" :
+                            category = "24" ;
+                            break ;
+                        case "Art" :
+                            category = "25" ;
+                            break ;
+                        case "Celebrities" :
+                            category = "26" ;
+                            break ;
+                        case "Animals" :
+                            category = "27" ;
+                            break ;
+                        case "Vehicles" :
+                            category = "28" ;
+                            break ;
+                        case "Entertainment: Comics" :
+                            category = "29" ;
+                            break ;
+                        case "Science: Gadgets" :
+                            category = "30" ;
+                            break ;
+                        case "Entertainment: Japanese Anime & Manga" :
+                            category = "31" ;
+                            break ;
+                        case "Entertainment: Cartoon & Animations" :
+                            category = "32" ;
+                            break ;
+                    }
+
+                    SettingsUtility.setUsername(username);
+                    SettingsUtility.setCategory(category);
+                    SettingsUtility.setDifficulty(difficulty);
+                    SettingsUtility.setNumberOfQuestions(numberOfQuestions);
+                    SettingsUtility.setType(type);
+
+
+                    Toast.makeText(SettingsActivity.this, "Welcome " + SettingsUtility.getUsername() + ".", Toast.LENGTH_SHORT).show();
+                    Intent intent2 = new Intent(SettingsActivity.this, MainActivity.class);
+                    startActivity(intent2);
+                }
+
             }
         }));
 
@@ -145,5 +253,10 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
     @Override
     public void onClick(View v) {
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        Snackbar.make(findViewById(R.id.settingsLayout), "Please, use a valid username.", Snackbar.LENGTH_SHORT).show();
     }
 }

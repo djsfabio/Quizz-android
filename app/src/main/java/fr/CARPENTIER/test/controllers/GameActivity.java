@@ -6,6 +6,7 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 
 
+import org.apache.commons.lang3.StringUtils;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
@@ -34,11 +35,16 @@ public class GameActivity extends AppCompatActivity {
         OkHttpClient client = new OkHttpClient();
 
         HttpUrl.Builder urlBuilder = Objects.requireNonNull(HttpUrl.parse("https://opentdb.com/api.php")).newBuilder();
-        urlBuilder.addQueryParameter("amount", "10");
-        urlBuilder.addQueryParameter("category", "9");
-        urlBuilder.addQueryParameter("difficulty", "easy");
-        urlBuilder.addQueryParameter("type", "multiple");
-
+        urlBuilder.addQueryParameter("amount", SettingsUtility.getaNumberOfQuestions());
+        if(!StringUtils.isBlank(SettingsUtility.getaCategory())){
+            urlBuilder.addQueryParameter("category", SettingsUtility.getaCategory());
+        }
+        if(!StringUtils.isBlank(SettingsUtility.getaDifficulty())){
+            urlBuilder.addQueryParameter("difficulty", SettingsUtility.getaDifficulty());
+        }
+        if(!StringUtils.isBlank(SettingsUtility.getaType())){
+            urlBuilder.addQueryParameter("type", SettingsUtility.getaType());
+        }
         String url = urlBuilder.build().toString();
 
         Request request = new Request.Builder()
@@ -57,7 +63,7 @@ public class GameActivity extends AppCompatActivity {
                     GameActivity.this.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            Titre.setText(myResponse);
+                            Titre.setText(url);
                         }
                     });
                 }

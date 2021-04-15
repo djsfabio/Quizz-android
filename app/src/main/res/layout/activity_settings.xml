@@ -6,7 +6,8 @@
     android:layout_height="match_parent"
     android:background="@drawable/blue_bg"
     android:orientation="vertical"
-    tools:context=".controllers.SettingsActivity">
+    tools:context=".controllers.SettingsActivity"
+    android:id="@+id/settingsLayout">
 
     <TextView
         android:layout_width="match_parent"

@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.material.snackbar.Snackbar;
+
 import java.util.Set;
 
 import fr.CARPENTIER.test.R;
@@ -31,6 +33,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         if (SettingsUtility.getUsername() != null) {
             TextView myTextView = (TextView) findViewById(R.id.myTextView);
+
             myTextView.setText(SettingsUtility.getUsername() + "\n" + SettingsUtility.getaNumberOfQuestions() + " Questions\nCategory : " + SettingsUtility.getaCategory() + "\nDifficulty : " + SettingsUtility.getaDifficulty() + "\nType : " + SettingsUtility.getaType());
         }
 
@@ -44,13 +47,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
 
+        buttonPlay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (SettingsUtility.getUsername() == null) {
+                    Snackbar.make(findViewById(R.id.mainLayout), "Before playing, please make your settings", Snackbar.LENGTH_SHORT).show();
+                }
+                else{
+                    Toast.makeText(MainActivity.this, "Clicked", Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(MainActivity.this, GameActivity.class);
+                    startActivity(intent);
+                }
+            }
+        });
+
 
     }
 
     @Override
     public void onClick(View v) {
-        Toast.makeText(MainActivity.this, "Clicked", Toast.LENGTH_SHORT).show();
-        Intent intent = new Intent(MainActivity.this, GameActivity.class);
-        startActivity(intent);
+
     }
 }
