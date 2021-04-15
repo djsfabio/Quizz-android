@@ -9,10 +9,11 @@
     tools:context=".controllers.GameActivity">
 
     <TextView
+        android:id="@+id/Titre"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/question_number"
-        android:textSize="50sp"
+        android:textSize="15sp"
         android:textStyle="bold"
         android:textColor="@color/black"
         android:gravity="center"
