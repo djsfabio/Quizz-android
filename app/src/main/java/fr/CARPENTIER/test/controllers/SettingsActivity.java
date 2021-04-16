@@ -255,8 +255,15 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
 
     }
 
+
     @Override
     public void onBackPressed() {
-        Snackbar.make(findViewById(R.id.settingsLayout), "Please, use a valid username.", Snackbar.LENGTH_SHORT).show();
+        if(SettingsUtility.getUsername() == null) {
+            Snackbar.make(findViewById(R.id.settingsLayout), "Please, use a valid username.", Snackbar.LENGTH_SHORT).show();
+        }
+        else{
+            super.onBackPressed();
+        }
+
     }
 }

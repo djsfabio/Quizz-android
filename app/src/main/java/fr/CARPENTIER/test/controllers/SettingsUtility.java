@@ -12,19 +12,19 @@ public class SettingsUtility {
         return aUsername;
     }
 
-    public static String getaNumberOfQuestions() {
+    public static String getNumberOfQuestions() {
         return aNumberOfQuestions;
     }
 
-    public static String getaCategory() {
+    public static String getCategory() {
         return aCategory;
     }
 
-    public static String getaDifficulty() {
+    public static String getDifficulty() {
         return aDifficulty;
     }
 
-    public static String getaType() {
+    public static String getType() {
         return aType;
     }
 

@@ -29,6 +29,7 @@
         android:textColor="#393E41"
         android:textSize="15sp"
         android:textStyle="bold" />
+    
 
     <LinearLayout
         android:layout_width="200dp"

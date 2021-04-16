@@ -13,8 +13,6 @@ import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
 
-import java.util.Set;
-
 import fr.CARPENTIER.test.R;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
@@ -36,7 +34,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             TextView myTextView = (TextView) findViewById(R.id.myTextView);
 
             buttonPlay.setBackgroundColor(Color.parseColor("#FF8A5B"));
-            myTextView.setText(SettingsUtility.getUsername() + "\n" + SettingsUtility.getaNumberOfQuestions() + " Questions\nCategory : " + SettingsUtility.getaCategory() + "\nDifficulty : " + SettingsUtility.getaDifficulty() + "\nType : " + SettingsUtility.getaType());
+            myTextView.setText(SettingsUtility.getUsername() + "\n" + SettingsUtility.getNumberOfQuestions() + " Questions\nCategory : " + SettingsUtility.getCategory() + "\nDifficulty : " + SettingsUtility.getDifficulty() + "\nType : " + SettingsUtility.getType());
         }
 
 

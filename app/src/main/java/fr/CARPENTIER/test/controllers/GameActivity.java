@@ -35,15 +35,15 @@ public class GameActivity extends AppCompatActivity {
         OkHttpClient client = new OkHttpClient();
 
         HttpUrl.Builder urlBuilder = Objects.requireNonNull(HttpUrl.parse("https://opentdb.com/api.php")).newBuilder();
-        urlBuilder.addQueryParameter("amount", SettingsUtility.getaNumberOfQuestions());
-        if(!StringUtils.isBlank(SettingsUtility.getaCategory())){
-            urlBuilder.addQueryParameter("category", SettingsUtility.getaCategory());
+        urlBuilder.addQueryParameter("amount", SettingsUtility.getNumberOfQuestions());
+        if(!StringUtils.isBlank(SettingsUtility.getCategory())){
+            urlBuilder.addQueryParameter("category", SettingsUtility.getCategory());
         }
-        if(!StringUtils.isBlank(SettingsUtility.getaDifficulty())){
-            urlBuilder.addQueryParameter("difficulty", SettingsUtility.getaDifficulty());
+        if(!StringUtils.isBlank(SettingsUtility.getDifficulty())){
+            urlBuilder.addQueryParameter("difficulty", SettingsUtility.getDifficulty());
         }
-        if(!StringUtils.isBlank(SettingsUtility.getaType())){
-            urlBuilder.addQueryParameter("type", SettingsUtility.getaType());
+        if(!StringUtils.isBlank(SettingsUtility.getType())){
+            urlBuilder.addQueryParameter("type", SettingsUtility.getType());
         }
         String url = urlBuilder.build().toString();
 
