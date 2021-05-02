@@ -90,22 +90,34 @@ public class GameActivity extends AppCompatActivity {
         bouton3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(String.valueOf(bouton3.getText()).equals(GameUtility.getListOfQuestion().get(i-1).getCorrectAnswer())){
-                    scoreNombre += 1 ;
-                    score.setText("Score : " + String.valueOf(scoreNombre));
+                if(bouton3.getText().equals("")){
+                    Toast.makeText(GameActivity.this, "Bouton invalide", Toast.LENGTH_SHORT).show();
                 }
-                updateQuestions();
+                else{
+                    if(String.valueOf(bouton3.getText()).equals(GameUtility.getListOfQuestion().get(i-1).getCorrectAnswer())){
+                        scoreNombre += 1 ;
+                        score.setText("Score : " + String.valueOf(scoreNombre));
+                    }
+                    updateQuestions();
+                }
+
             }
         });
 
         bouton4.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(String.valueOf(bouton4.getText()).equals(GameUtility.getListOfQuestion().get(i-1).getCorrectAnswer())){
-                    scoreNombre += 1 ;
-                    score.setText("Score : " + String.valueOf(scoreNombre));
+                if(bouton4.getText().equals("")){
+                    Toast.makeText(GameActivity.this, "Bouton invalide", Toast.LENGTH_SHORT).show();
                 }
-                updateQuestions();
+                else{
+                    if(String.valueOf(bouton4.getText()).equals(GameUtility.getListOfQuestion().get(i-1).getCorrectAnswer())){
+                        scoreNombre += 1 ;
+                        score.setText("Score : " + String.valueOf(scoreNombre));
+                    }
+                    updateQuestions();
+                }
+
             }
         });
     }
@@ -134,6 +146,7 @@ public class GameActivity extends AppCompatActivity {
             Toast.makeText(GameActivity.this, "C'est finis votre score est de : " + String.valueOf(scoreNombre), Toast.LENGTH_SHORT).show();
             GameUtility.clearListOfQuestion();
             UserScore scoreUtilisateur = new UserScore(SettingsUtility.getUsername() , scoreNombre) ;
+            UserScore.setScoreUtilisateur(scoreUtilisateur);
             Intent intent = new Intent(GameActivity.this, ClassementActivity.class);
             startActivity(intent);
 

@@ -17,6 +17,10 @@ public class UserScore {
         return listScoreUtilisateur ;
     }
 
+    public static void clearListOfUser(){
+        listScoreUtilisateur.clear();
+    }
+
     public UserScore(String user, int score) {
         this.user = user;
         this.score = score;
