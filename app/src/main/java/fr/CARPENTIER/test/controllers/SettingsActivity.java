@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.Html;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
@@ -16,15 +17,27 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.material.snackbar.Snackbar;
 
 import org.apache.commons.lang3.StringUtils;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 import fr.CARPENTIER.test.R;
+import fr.CARPENTIER.test.models.Question;
+import okhttp3.HttpUrl;
 
 public class SettingsActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -39,6 +52,7 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
 
     Button buttonSubmit;
 
+    private RequestQueue mQueue ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +60,10 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         setContentView(R.layout.activity_settings);
 
         usernameInput = (EditText) findViewById(R.id.usernameInput);
+
+        // Récupération :
+
+
 
 
         /* Spinner number of questions */
@@ -129,7 +147,6 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         buttonSubmit.setOnClickListener((new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 if(usernameInput.getText().toString().equals("")){
                     Snackbar.make(findViewById(R.id.settingsLayout), "Please, use a valid username", Snackbar.LENGTH_SHORT).show();
                 }
@@ -239,7 +256,22 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
                     SettingsUtility.setNumberOfQuestions(numberOfQuestions);
                     SettingsUtility.setType(type);
 
+                    HttpUrl.Builder urlBuilder = Objects.requireNonNull(HttpUrl.parse("https://opentdb.com/api.php")).newBuilder();
+                    urlBuilder.addQueryParameter("amount", SettingsUtility.getNumberOfQuestions());
+                    if(!StringUtils.isBlank(SettingsUtility.getCategory())){
+                        urlBuilder.addQueryParameter("category", SettingsUtility.getCategory());
+                    }
+                    if(!StringUtils.isBlank(SettingsUtility.getDifficulty())){
+                        urlBuilder.addQueryParameter("difficulty", SettingsUtility.getDifficulty());
+                    }
+                    if(!StringUtils.isBlank(SettingsUtility.getType())){
+                        urlBuilder.addQueryParameter("type", SettingsUtility.getType());
+                    }
+                    String url = urlBuilder.build().toString();
 
+                    mQueue = Volley.newRequestQueue(SettingsActivity.this) ;
+
+                    jsonParse(url) ;
                     Toast.makeText(SettingsActivity.this, "Welcome " + SettingsUtility.getUsername() + ".", Toast.LENGTH_SHORT).show();
                     Intent intent2 = new Intent(SettingsActivity.this, MainActivity.class);
                     startActivity(intent2);
@@ -250,9 +282,52 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
 
     }
 
-    @Override
-    public void onClick(View v) {
+    private void jsonParse(String url){
 
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try {
+                    JSONArray jsonArray = response.getJSONArray("results") ;
+
+                    for(int i = 0 ; i < jsonArray.length() ; i++){
+                        JSONObject lesQuestions = jsonArray.getJSONObject(i) ;
+                        String correct_answer = lesQuestions.getString("correct_answer") ;
+
+                        String question = lesQuestions.getString("incorrect_answers") ;
+                       // GameUtility.setaQuestion(question);
+
+                        List<String> incorrect_answers = new ArrayList<>();
+                        String nouvelle = question.replaceAll("\\\\{0}\"", "") ;
+                        nouvelle = nouvelle.replaceAll("[\\[\\]\\(\\)]", "");
+                        incorrect_answers = Arrays.asList(nouvelle.split(","));
+
+                        ArrayList<String> answers = new ArrayList<>(incorrect_answers);
+                        answers.add(correct_answer) ;
+
+                        Log.i("Correct Answer" , lesQuestions.getString("correct_answer")) ;
+
+
+                        Question nouvelleQuestion = new Question(lesQuestions.getString("category"),
+                                lesQuestions.getString("type"), lesQuestions.getString("difficulty") ,
+                                lesQuestions.getString("question") , lesQuestions.getString("correct_answer") ,
+                                incorrect_answers , answers);
+
+                        GameUtility.setQuestion(nouvelleQuestion);
+
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                error.printStackTrace();
+            }
+        });
+
+        mQueue.add(request) ;
     }
 
 
@@ -264,6 +339,11 @@ public class SettingsActivity extends AppCompatActivity implements View.OnClickL
         else{
             super.onBackPressed();
         }
+
+    }
+
+    @Override
+    public void onClick(View v) {
 
     }
 }
