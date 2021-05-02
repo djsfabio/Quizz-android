@@ -29,40 +29,21 @@ public class Question {
         this.question = question;
         this.correct_answer = correct_answer;
         this.incorrect_answers = incorrect_answers;
-        this.answers = new ArrayList<>(incorrect_answers);
-        this.answers.add(correct_answer);
+        this.answers = answers ;
         Collections.shuffle(this.answers);
     }
 
-    public Question(final JSONObject jsonObject) throws JSONException {
-        this.category = Html.fromHtml(jsonObject.getString("category")).toString();
-        this.type = Html.fromHtml(jsonObject.getString("type")).toString();
-        this.difficulty = Html.fromHtml(jsonObject.getString("difficulty")).toString();
-        this.question = Html.fromHtml(jsonObject.getString("question")).toString();
-        this.correct_answer = Html.fromHtml(jsonObject.getString("correct_answer")).toString();
+    public  String getCategory(){ return category; }
 
-        this.incorrect_answers = new ArrayList<>();
-        JSONArray incorrect_answers_raw = jsonObject.getJSONArray("incorrect_answer");
-        for (int i = 0; i < incorrect_answers_raw.length(); i++){
-            incorrect_answers.add(Html.fromHtml(incorrect_answers_raw.get(i).toString()).toString());
-        }
+    public  String getType(){ return type; }
 
-        this.answers = new ArrayList<>(incorrect_answers);
-        this.answers.add(correct_answer);
-        Collections.shuffle(this.answers);
-    }
+    public  String getDifficulty(){ return difficulty; }
 
-    public  String getCategory(){ return  category; }
+    public  String getQuestion(){ return question; }
 
-    public  String getType(){ return  type; }
+    public  String getCorrectAnswer(){ return correct_answer; }
 
-    public  String getDifficulty(){ return  difficulty; }
+    public  List<String> getIncorrectAnswers(){ return incorrect_answers; }
 
-    public  String getQuestion(){ return  question; }
-
-    public  String getCorrectAnswer(){ return  correct_answer; }
-
-    public  List<String> getIncorrectAnswers(){ return  incorrect_answers; }
-
-    public  List<String> getAllAnswers(){ return  answers; }
+    public  List<String> getAllAnswers(){ return answers; }
 }

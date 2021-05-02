@@ -4,9 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/blue_bg"
+    android:background="@drawable/reverse"
     android:orientation="vertical"
-    tools:context=".controllers.SettingsActivity">
+    tools:context=".controllers.SettingsActivity"
+    android:id="@+id/settingsLayout">
 
     <TextView
         android:layout_width="match_parent"
@@ -14,7 +15,7 @@
         android:layout_marginBottom="50dp"
         android:gravity="center"
         android:text="@string/Titre_settings"
-        android:textColor="@color/black"
+        android:textColor="@color/notreGris"
         android:textSize="50sp"
         android:textStyle="bold" />
 
@@ -31,49 +32,57 @@
             android:layout_height="wrap_content"
             android:gravity="center"
             android:hint="Enter your username"
-            android:inputType="text" />
+            android:inputType="text"
+            android:textColor="@color/notreGris"/>
 
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/numberOfQuestionsInput"
+        <TextView
             android:layout_width="300dp"
             android:layout_height="wrap_content"
-            android:gravity="center"
-            android:hint="Number of questions (1-50)"
-            android:inputType="number" />
+            android:text="Number of questions"
+            android:textColor="@color/notreGris"/>
+
+        <Spinner
+            android:id="@+id/numberOfQuestionsInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/notreGris"/>
 
         <TextView
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:text="@string/category"
-            android:textColor="@color/black"/>
+            android:textColor="@color/notreGris"/>
 
         <Spinner
             android:id="@+id/categoryInput"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:textColor="@color/notreGris"/>
 
         <TextView
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:text="@string/difficulty"
-            android:textColor="@color/black"/>
+            android:textColor="@color/notreGris"/>
 
         <Spinner
             android:id="@+id/difficultyInput"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:textColor="@color/notreGris"/>
 
         <TextView
             android:layout_width="300dp"
             android:layout_height="wrap_content"
             android:text="@string/type"
-            android:textColor="@color/black"/>
+            android:textColor="@color/notreGris"/>
 
         <Spinner
             android:id="@+id/typeInput"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:textColor="@color/notreGris"/>
 
         <Button
             android:id="@+id/buttonSubmit"
@@ -81,7 +90,8 @@
             android:layout_width="150dp"
             android:layout_gravity="center"
             android:layout_height="wrap_content"
-            android:text="Submit" />
+            android:text="Submit"
+            android:backgroundTint="@color/notreOrange"/>
 
 
     </LinearLayout>
