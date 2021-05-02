@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.util.Objects;
 
 import fr.CARPENTIER.test.R;
+import fr.CARPENTIER.test.models.Question;
 import okhttp3.HttpUrl;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -47,9 +48,7 @@ public class GameActivity extends AppCompatActivity {
         }
         String url = urlBuilder.build().toString();
 
-        Request request = new Request.Builder()
-                .url(url)
-                .build();
+        Request request = new Request.Builder().url(url).build();
 
         client.newCall(request).enqueue(new Callback() {
             @Override
@@ -60,10 +59,12 @@ public class GameActivity extends AppCompatActivity {
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 if (response.isSuccessful()) {
                     final String myResponse = Objects.requireNonNull(response.body()).string();
+                    GameUtility.setaResultatAPI(myResponse);
+
                     GameActivity.this.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            Titre.setText(url);
+                            Titre.setText(GameUtility.getResultatAPI());
                         }
                     });
                 }
